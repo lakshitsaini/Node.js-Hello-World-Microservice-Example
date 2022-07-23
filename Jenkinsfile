@@ -34,15 +34,17 @@ pipeline {
       steps{
         sh "sudo systemctl start docker"
         script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          dockerImage = docker.build("lakshitsainiceligo/node.js-hello-world-microservice-example")
         }
       }
     }
     stage('Deploy Image') {
       steps{
          script {
-            docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
+            docker.withRegistry('https://registry.hub.docker.com', registryCredential ) {
+            //dockerImage.push()
+            dockerImage.push("${env.BUILD_NUMBER}")            
+            dockerImage.push("latest")  
           }
         }
       }
