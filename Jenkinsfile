@@ -1,9 +1,9 @@
 pipeline {
-//   environment {
-//     registry = "lakshitsainiceligo/node.js-hello-world-microservice-example"
-//     registryCredential = 'dockerhub'
-//     dockerImage = ''
-//   }
+  environment {
+    registry = "lakshitsainiceligo/node.js-hello-world-microservice-example"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
   agent any
   tools {nodejs "18.6.0"}
   stages {
@@ -30,26 +30,26 @@ pipeline {
     //         }
     //     }
     // }
-    // stage('Building image') {
-    //   steps{
-    //     script {
-    //       dockerImage = docker.build registry + ":$BUILD_NUMBER"
-    //     }
-    //   }
-    // }
-    // stage('Deploy Image') {
-    //   steps{
-    //      script {
-    //         docker.withRegistry( '', registryCredential ) {
-    //         dockerImage.push()
-    //       }
-    //     }
-    //   }
-    // }
-    // stage('Remove Unused docker image') {
-    //   steps{
-    //     sh "docker rmi $registry:$BUILD_NUMBER"
-    //   }
-    // }
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+    stage('Deploy Image') {
+      steps{
+         script {
+            docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
+      }
+    }
   }
 }
