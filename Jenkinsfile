@@ -32,7 +32,6 @@ pipeline {
     }
     stage('Building image') {
       steps{
-        sh "sudo systemctl start docker"
         script {
           dockerImage = docker.build("lakshitsainiceligo/node.js-hello-world-microservice-example")
         }
