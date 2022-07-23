@@ -27,13 +27,14 @@ pipeline {
             script{
                 def dockerHome = tool 'docker'
                 env.PATH = "${dockerHome}/bin:${env.PATH}"
-                docker --version
             }
         }
     }
     stage('Building image') {
       steps{
         script {
+          echo "docker =>"
+          sh "docker --version"
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
       }
