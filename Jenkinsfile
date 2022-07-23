@@ -27,7 +27,7 @@ pipeline {
             script{
                 def dockerHome = tool 'docker'
                 env.PATH = "${dockerHome}/bin:${env.PATH}"
-                -v $(which docker):/usr/bin/docker
+                docker run -u 0 --privileged --name jenkins
             }
         }
     }
