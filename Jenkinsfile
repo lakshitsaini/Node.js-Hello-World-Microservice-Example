@@ -27,21 +27,20 @@ pipeline {
             script{
                 def dockerHome = tool 'docker'
                 env.PATH = "${dockerHome}/bin:${env.PATH}"
-                docker run -u 0 --privileged --name jenkins
             }
         }
     }
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          dockerImage = dockerHome.build registry + ":$BUILD_NUMBER"
         }
       }
     }
     stage('Deploy Image') {
       steps{
          script {
-            docker.withRegistry( '', registryCredential ) {
+            dockerHome.withRegistry( '', registryCredential ) {
             dockerImage.push()
           }
         }
