@@ -39,7 +39,7 @@ CMD ["npm", "-s", "start", "--", "--port", "${HTTP_PORT}", "--log-level", "${LOG
 
 #########################################################################################################################
 FROM node
-WORKDIR /home/node/app
+WORKDIR /build-dir
 COPY package*.json ./
 RUN npm install
 COPY . .
