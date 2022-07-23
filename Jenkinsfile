@@ -33,7 +33,7 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build("lakshitsainiceligo/node.js-hello-world-microservice-example")
+          dockerImage = dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
       }
     }
@@ -41,7 +41,6 @@ pipeline {
       steps{
          script {
             docker.withRegistry('https://registry.hub.docker.com', registryCredential ) {
-            //dockerImage.push()
             dockerImage.push("${env.BUILD_NUMBER}")            
             dockerImage.push("latest")  
           }
