@@ -27,10 +27,7 @@ pipeline {
             script{
                 def dockerHome = tool 'docker'
                 env.PATH = "${dockerHome}/bin:${env.PATH}"
-                RUN curl -fsSLO https://get.docker/builds/Linux/x86_64/docker-17.04.0-ce.tgz \
-                                      && tar xzvf docker-17.04.0-ce.tgz \
-                                      && mv docker/docker /usr/local/bin \
-                                      && rm -r docker docker-17.04.0-ce.tgz
+                docker run --rm -u root -p 8080:8080 -v jenkins-data:/var/jenkins_home -v $(which docker):/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v "$HOME":/home jenkinsci/blueocean
             }
         }
     }
